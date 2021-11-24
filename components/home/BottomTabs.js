@@ -21,7 +21,7 @@ const style = StyleSheet.create({
        
         position: 'absolute',
         width:'100%',
-        bottom: '1%',
+        bottom: 0,
         zIndex: 999,
         backgroundColor:'white'
     },
@@ -30,8 +30,8 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems:'center',
-        height: 50,
-        paddingTop: 10,
+        height: 60,
+        paddingVertical: 10,
         marginHorizontal:20
     },
     icons: {
