@@ -1,15 +1,29 @@
 import React from 'react'
-import { View, Text,Image,StyleSheet } from 'react-native'
+import { View, Text,Image,StyleSheet, TouchableOpacity } from 'react-native'
 
-export default function BottomTabs() {
+export default function BottomTabs({navigation}) {
     return (
         <View style={style.tabContainer}>
             <View style={{borderBottomColor: '#F8F8F8',borderBottomWidth: 2,}}/>
             <View style={style.imgContainer} >
-            <Image style={style.icons} source={require('../../assets/Images/Icons/tabs/icons8-home-64.png')}></Image>
-            <Image style={style.icons} source={require('../../assets/Images/Icons/tabs/icons8-search-100.png')}></Image>
-            <Image style={style.icons} source={require('../../assets/Images/Icons/tabs/icons8-add-new-48.png')}></Image>
-            <Image style={style.image} source={{uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS68wdEq2VI5hUenQIDvF6N4gwV84Qx6t3U8dW6lkWl9fUhR4vUANq4Fc_Dt5XCrwmGI4E&usqp=CAU'}}></Image>
+            
+                <TouchableOpacity>
+                    <Image style={style.icons} source={require('../../assets/Images/Icons/tabs/icons8-home-64.png')}></Image>
+                </TouchableOpacity>
+                
+                <TouchableOpacity>
+                    <Image style={style.icons} source={require('../../assets/Images/Icons/tabs/icons8-search-100.png')}></Image>
+                </TouchableOpacity>
+               
+                <TouchableOpacity onPress={()=>navigation.push('NewPostScreen')}>
+                    <Image style={style.icons} source={require('../../assets/Images/Icons/tabs/icons8-add-new-48.png')}></Image>
+                </TouchableOpacity>
+               
+                <TouchableOpacity>
+                    <Image style={style.image} source={{uri:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS68wdEq2VI5hUenQIDvF6N4gwV84Qx6t3U8dW6lkWl9fUhR4vUANq4Fc_Dt5XCrwmGI4E&usqp=CAU'}}></Image>
+                </TouchableOpacity>
+                
+           
         
             </View>
         </View>

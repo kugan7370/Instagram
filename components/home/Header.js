@@ -50,7 +50,7 @@ const style = StyleSheet.create({
         alignItems: "center",
         marginHorizontal: 20,
         marginVertical: 10,
-        marginTop:30,
+       
     },
     iconTab: {
         flexDirection: 'row',
