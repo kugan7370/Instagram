@@ -2,6 +2,7 @@ import { Formik } from 'formik'
 import React, { useState } from 'react'
 import { View, Text, Image, TextInput,StyleSheet, Button } from 'react-native'
 import * as yup from 'yup'
+import validUrl from 'valid-url'
 
 const placehorderImage = 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty-300x240.jpg';
 
@@ -30,7 +31,7 @@ export default function FormikPostUpload() {
                 
                 <View style={style.postContainer}>
                     <View style={style.captionContainer}>
-                        <Image style={style.image} source={{uri:thumnail?thumnail:placehorderImage} }></Image>
+                        <Image style={style.image} source={{uri:validUrl.isUri(thumnail)?thumnail:placehorderImage} }></Image>
                         <TextInput style={style.caption} placeholder='Caption here' multiline={true} onChangeText={handleChange('caption')} onBlur={handleBlur('caption')} value={values.caption}/>
                     </View>
 
