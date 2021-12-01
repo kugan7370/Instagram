@@ -1,8 +1,11 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, Button, TouchableOpacity, Alert } from 'react-native'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import * as EmailValidator from 'email-validator';
+import { auth,db } from '../../Firebase';
+import { createUserWithEmailAndPassword } from '@firebase/auth';
+auth
 
 const SignupSchema = yup.object().shape({
     email: yup.string().trim().email().required('email is requid'),
@@ -12,7 +15,18 @@ const SignupSchema = yup.object().shape({
 })
 
 
-export default function SignUp({navigation}) {
+export default function SignUp({ navigation }) {
+    const onSignUp = async (email,password) => {
+        
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            console.log("firebase create successfully",email,password);
+        } catch (error) {
+            Alert.alert(error);
+        }
+        
+    }
+
     return (
         <View style={{ marginHorizontal: 10, }}>
             <Formik initialValues={
@@ -24,7 +38,7 @@ export default function SignUp({navigation}) {
                 }
             }
                 onSubmit={values => {
-                console.log(values);
+                    onSignUp(values.email,values.password)
                 }}
                 validationSchema={SignupSchema}
             >
