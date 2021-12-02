@@ -1,13 +1,20 @@
-
 import React from 'react';
+import { LogBox } from 'react-native';
+import AuthNavigation from './AuthNavigation';
 
-import SignedINStack from './Navigation';
+
+
+
+
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();
 
 
 export default function App() {
+     
       return (
-        
-     <SignedINStack/>
+            
+     <AuthNavigation/>
   )}
 
 

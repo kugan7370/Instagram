@@ -21,9 +21,14 @@ export default function Login({ navigation }) {
         
         try {
             await signInWithEmailAndPassword(auth, email, password)
-            console.log("firevase login successfull",email,password);
+            
+            Alert.alert("Welcome!");
+            
+            // console.log("firebase login successfull",email,password);
+            
+           
         } catch (error) {
-            Alert.alert(error);
+            Alert.alert(error.message);
         }
 
         
@@ -58,7 +63,7 @@ export default function Login({ navigation }) {
                             </View>
 
                             <View style={{ marginTop: 50, }}>
-                                <Button disabled={!isValid} onPress={handleSubmit} title="Log in" ></Button>
+                                <Button disabled={!isValid} onPress={handleSubmit} title="Sign in" ></Button>
                             </View>
 
                             <View style={{ flexDirection: 'row', marginTop: 40, justifyContent: 'center' }} >

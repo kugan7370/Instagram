@@ -8,7 +8,8 @@ import Posts from '../components/home/Posts.js'
 import Stories from '../components/home/Stories'
 
 export default function HomeScreen({navigation}) {
-   
+ 
+ 
     return (
         <SafeAreaView style={{ flex: 1,backgroundColor:'white'}}>
             <Header  />

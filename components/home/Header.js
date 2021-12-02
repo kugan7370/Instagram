@@ -1,11 +1,16 @@
+import { signOut } from '@firebase/auth'
 import React from 'react'
 import { View, Text, SafeAreaView, Image,StyleSheet, Touchable, TouchableOpacity } from 'react-native'
+import { auth } from '../../Firebase'
 
 export default function Header() {
+    const SignOut = () => {
+        signOut(auth)
+    }
     return (
         <View style={style.headerContainer}>
             <View >
-                <TouchableOpacity>
+                <TouchableOpacity onPress={SignOut}>
                     <Image style={style.logo} source={{ uri:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/320px-Instagram_logo.svg.png"}}></Image>
                     
                 </TouchableOpacity>

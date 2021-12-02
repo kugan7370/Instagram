@@ -8,7 +8,7 @@ export default function NewPosts({navigation}) {
     return (
         <View>
             <NewPostHeader navigation={navigation}/>
-            <FormikPostUpload/>
+            <FormikPostUpload navigation={navigation}/>
         </View>
       
 
