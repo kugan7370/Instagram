@@ -34,10 +34,14 @@ export default function FormikPostUpload({ navigation }) {
 
     }
 
+    useEffect(() => {
+        getusername();
+    })
+
 
 
     const uploadPost = async (imageUrl, caption) => {
-        getusername();
+
 
         await addDoc(collection(db, 'post'), {
             imgurl: imageUrl,
@@ -51,7 +55,9 @@ export default function FormikPostUpload({ navigation }) {
             comments: [],
 
         }).then(() => {
-            Alert.alert("Upload Successfully")
+            Alert.alert("Upload Successfully");
+            console.log("UPload successfully");
+            navigation.goBack();
         })
 
     }

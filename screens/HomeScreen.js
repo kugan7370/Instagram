@@ -1,4 +1,4 @@
-import { collection, onSnapshot } from '@firebase/firestore'
+import { collection, onSnapshot, orderBy, query } from '@firebase/firestore'
 import React, { useEffect, useState } from 'react'
 
 import { View, Text, ScrollView, StyleSheet } from 'react-native'
@@ -14,11 +14,9 @@ export default function HomeScreen({ navigation }) {
 
 
     useEffect(() => {
-
-        onSnapshot(collection(db, 'post'), (snapshot) => {
-            setuserPosts((snapshot.docs.map((doc) => doc.data())));
-
-
+        const q = query((collection(db, 'post')), orderBy("createAt", "desc"))
+        onSnapshot(q, (snapshot) => {
+            setuserPosts((snapshot.docs.map((post) => ({ id: post.id, ...post.data() }))));
         })
 
 

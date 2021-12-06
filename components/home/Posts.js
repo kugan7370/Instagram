@@ -1,8 +1,13 @@
-import { collection, onSnapshot } from '@firebase/firestore'
+import { arrayRemove, arrayUnion, collection, doc, onSnapshot, updateDoc, where } from '@firebase/firestore'
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
-import { useEffect } from 'react/cjs/react.development'
+import { View, Text, StyleSheet, Image, Alert } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+// import { useEffect } from 'react/cjs/react.development'
 import { auth, db } from '../../Firebase'
+
+const likedIcon = "https://www.shareicon.net/data/2017/06/22/887607_heart_512x512.png";
+const UnlikedIcon = 'https://iconape.com/wp-content/png_logo_vector/like.png';
+
 
 
 
@@ -10,17 +15,38 @@ import { auth, db } from '../../Firebase'
 export default function Posts({ post }) {
 
 
+    const handleClick = async (post) => {
+        //    include mean, if the values in  it will show true, ifnot false
+        //  but in here it will work opposite  (!)
+
+
+        const currentLikeStatus = !post.likes_by_users.includes(
+            auth.currentUser.email
+        )
+
+        await updateDoc(doc(db, 'post', post.id), {
+            likes_by_users: currentLikeStatus ? arrayUnion(
+                auth.currentUser.email
+            ) : arrayRemove(
+                auth.currentUser.email
+            )
+
+        })
+
+    }
+
+
     return (
         <View style={style.container}>
             <View style={{ borderBottomColor: '#F8F8F8', borderBottomWidth: 2, }} />
             <PostHeader post={post} />
             <PostImage post={post} />
-            <PostFooter post={post} />
+            <PostFooter post={post} handleClick={handleClick} />
 
         </View>
     )
-}
 
+}
 
 
 function PostHeader({ post }) {
@@ -31,7 +57,7 @@ function PostHeader({ post }) {
                     <Image style={style.image} source={{ uri: post.profile_pic }}></Image>
                 </View>
 
-                <Text style={{ fontWeight: 'bold' }}>{post.username}</Text>
+                <Text style={{ fontWeight: 'bold', marginLeft: 5 }}>{post.username}</Text>
             </View>
 
             <View>
@@ -55,11 +81,13 @@ function PostImage({ post }) {
 
 
 
-function PostFooter() {
+function PostFooter({ post, handleClick }) {
+
+
     return (
         <View>
-            <FooterIcons />
-            <FooterLikes />
+            <FooterIcons post={post} handleClick={handleClick} />
+            <FooterLikes post={post} />
             <Comments />
         </View>
 
@@ -67,10 +95,13 @@ function PostFooter() {
     )
 }
 
-const FooterIcons = () => (
+const FooterIcons = ({ post, handleClick }) => (
+
     <View style={style.footerContainer}>
         <View style={style.threeIcons} >
-            <Image style={style.footerIcon} source={require('../../assets/Images/Icons/icons8-heart-50.png')} />
+            <TouchableOpacity onPress={() => handleClick(post)}>
+                <Image style={style.footerIcon} source={{ uri: post.likes_by_users.includes(auth.currentUser.email) ? likedIcon : UnlikedIcon }} />
+            </TouchableOpacity>
             <Image style={style.footerIcon} source={require('../../assets/Images/Icons/icons8-speech-bubble-64.png')} />
             <Image style={style.footerIcon} source={require('../../assets/Images/Icons/icons8-sent-150.png')} />
 
@@ -85,9 +116,9 @@ const FooterIcons = () => (
 )
 
 
-const FooterLikes = () => (
+const FooterLikes = ({ post }) => (
     <View >
-        <Text style={{ marginLeft: 20, fontWeight: 'bold', }} >7,320 likes</Text>
+        <Text style={{ marginLeft: 20, fontWeight: 'bold', }} >{post.likes_by_users.length} likes</Text>
     </View>
 )
 
@@ -157,12 +188,18 @@ const style = StyleSheet.create({
     //--------------------- POsts---------------------
     postContainer: {
         height: 450,
-        width: '100%'
+        width: '100%',
+        overflow: 'hidden',
+        paddingHorizontal: 15
+
+
     },
     postImg: {
 
         height: '100%',
+        width: '100%',
         resizeMode: 'cover',
+        borderRadius: 10
     },
     //--------------------- footer---------------------
     footerContainer: {
