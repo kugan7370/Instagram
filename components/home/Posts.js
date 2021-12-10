@@ -4,6 +4,8 @@ import { View, Text, StyleSheet, Image, Alert } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 // import { useEffect } from 'react/cjs/react.development'
 import { auth, db } from '../../Firebase'
+import { likedImage } from '../../assets/Images/Icons/icons8-heart-60.png';
+import { UnlikedImage } from '../../assets/Images/Icons/icons8-heart-50.png';
 
 const likedIcon = "https://www.shareicon.net/data/2017/06/22/887607_heart_512x512.png";
 const UnlikedIcon = 'https://iconape.com/wp-content/png_logo_vector/like.png';
@@ -98,10 +100,13 @@ function PostFooter({ post, handleClick }) {
 const FooterIcons = ({ post, handleClick }) => (
 
     <View style={style.footerContainer}>
+
         <View style={style.threeIcons} >
+
             <TouchableOpacity onPress={() => handleClick(post)}>
                 <Image style={style.footerIcon} source={{ uri: post.likes_by_users.includes(auth.currentUser.email) ? likedIcon : UnlikedIcon }} />
             </TouchableOpacity>
+
             <Image style={style.footerIcon} source={require('../../assets/Images/Icons/icons8-speech-bubble-64.png')} />
             <Image style={style.footerIcon} source={require('../../assets/Images/Icons/icons8-sent-150.png')} />
 

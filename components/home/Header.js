@@ -1,11 +1,17 @@
 import { signOut } from '@firebase/auth'
+import { doc, updateDoc } from 'firebase/firestore'
 import React from 'react'
 import { View, Text, SafeAreaView, Image, StyleSheet, Touchable, TouchableOpacity } from 'react-native'
-import { auth } from '../../Firebase'
+import { auth, db } from '../../Firebase'
 
 export default function Header() {
-    const SignOut = () => {
-        signOut(auth)
+    const SignOut = async () => {
+        await updateDoc(doc(db, 'users', auth.currentUser.uid), {
+            isOnline: false,
+        });
+
+        await signOut(auth);
+
     }
     return (
         <View style={style.headerContainer}>

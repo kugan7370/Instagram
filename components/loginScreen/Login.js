@@ -7,9 +7,7 @@ import * as EmailValidator from 'email-validator';
 
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { auth, db } from '../../Firebase';
-import { collection, getDocs, query } from '@firebase/firestore';
-
-
+import { collection, getDocs, query, doc, updateDoc, getDoc } from '@firebase/firestore';
 
 
 
@@ -28,8 +26,26 @@ export default function Login({ navigation }) {
     const onLogin = async (email, password) => {
 
         try {
-            await signInWithEmailAndPassword(auth, email, password)
-            Alert.alert("welcome!");
+            const result = await signInWithEmailAndPassword(auth, email, password);
+
+            // for welcome alert
+            const ref = doc(db, 'users', auth.currentUser.uid);
+            const docSnap = await getDoc(ref);
+            if (docSnap.exists) {
+
+                const username = docSnap.data().username;
+                Alert.alert(`Welcome ${username}!`);
+            }
+
+            //  for update
+
+            await updateDoc(doc(db, 'users', result.user.uid), {
+                isOnline: true,
+            });
+
+
+
+
 
 
 

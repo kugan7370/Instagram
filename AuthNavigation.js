@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from '@firebase/auth';
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text } from 'react-native'
 import { auth } from './Firebase'
 import { SignedInStack, SignOutStack } from './Navigation'
@@ -11,19 +11,27 @@ import { SignedInStack, SignOutStack } from './Navigation'
 export default function AuthNavigation() {
     // null means initial false so first login page will be assign then 
     // after signin state will be change to true so homepage will be assign
-    const [currentUser, setCurrentUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState(false);
 
-    const useHandler = (user) => {
-        user?setCurrentUser(user):setCurrentUser(null)
+    const useHandler = () => {
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                setCurrentUser(true);
+            }
+            else {
+                setCurrentUser(false);
+            }
+        })
     }
+    useEffect(() => {
+        useHandler();
+    })
 
-     useEffect(()=>onAuthStateChanged(auth, (user) => useHandler(user)),[])  
-    
 
-   
+
     return (
         <>
-            {currentUser? <SignedInStack/>: <SignOutStack/>}
+            {currentUser ? <SignedInStack /> : <SignOutStack />}
         </>
     )
 }

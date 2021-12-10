@@ -46,6 +46,9 @@ export default function BottomTabs({ navigation }) {
                 <TouchableOpacity onPress={() => navigation.push('NewPostScreen')}>
                     <Image style={style.icons} source={require('../../assets/Images/Icons/tabs/icons8-add-new-48.png')}></Image>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.push('Chat')}>
+                    <Image style={style.icons} source={require('../../assets/Images/Icons/icons8-search-chat-48.png')}></Image>
+                </TouchableOpacity>
 
                 <TouchableOpacity>
                     <Image style={style.image} source={{ uri: userdata.profile_pic }}></Image>

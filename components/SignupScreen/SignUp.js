@@ -6,7 +6,7 @@ import * as yup from 'yup'
 import * as EmailValidator from 'email-validator';
 import { auth, db } from '../../Firebase';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
-import { addDoc, collection } from '@firebase/firestore';
+import { addDoc, collection, setDoc, doc } from '@firebase/firestore';
 
 
 const SignupSchema = yup.object().shape({
@@ -41,11 +41,13 @@ export default function SignUp({ navigation }) {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
             console.log("firebase create successfully", email, password);
-            await addDoc(collection(db, 'users'), {
+
+            await setDoc(doc(db, 'users', auth.currentUser.uid), {
                 owner_uid: auth.currentUser.uid,
                 username: username,
                 email: email,
                 profile_pic: await getRandomProfilePic(),
+                isOnline: true,
             }).then(() => navigation.push('LoginScreen'));
             Alert.alert('Successfully Registered')
             console.log("Successfully Registered", email, password);
