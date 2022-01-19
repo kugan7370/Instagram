@@ -6,8 +6,8 @@ import HomeScreen from './screens/HomeScreen';
 import NewPostScreen from './screens/NewPostScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
-import ChatScreen from './screens/ChatScreen';
-
+import ChatScreen from './screens/ChatScreen'
+import MessageScreen from './screens/MessageScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,9 +15,10 @@ const Stack = createNativeStackNavigator();
 export function SignedInStack() {
     return (
         <NavigationContainer >
-            <Stack.Navigator initialRouteName="Chat" screenOptions={{ headerShown: false }} >
+            <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{ headerShown: false }} >
                 <Stack.Screen name='HomeScreen' component={HomeScreen} />
                 <Stack.Screen name='Chat' component={ChatScreen} />
+                <Stack.Screen name='Message' component={MessageScreen} />
                 <Stack.Screen name='NewPostScreen' component={NewPostScreen} />
             </Stack.Navigator>
 

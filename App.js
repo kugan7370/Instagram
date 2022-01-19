@@ -3,6 +3,9 @@ import { LogBox } from 'react-native';
 import AuthNavigation from './AuthNavigation';
 
 
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
 
 
 
@@ -11,10 +14,12 @@ LogBox.ignoreAllLogs();
 
 
 export default function App() {
-     
+
       return (
-            
-     <AuthNavigation/>
-  )}
+            <Provider store={store}>
+                  <AuthNavigation />
+            </Provider>
+      )
+}
 
 

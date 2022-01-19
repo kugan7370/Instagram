@@ -9,8 +9,8 @@ import AllUser from '../components/ChatScreen/AllUser'
 import OnLineUsers from '../components/ChatScreen/OnLineUsers'
 import { auth, db } from '../Firebase'
 
-export default function ChatScreen() {
-    const navigation = useNavigation();
+export default function ChatScreen({ navigation }) {
+    // const navigation = useNavigation();
 
 
 
@@ -30,8 +30,8 @@ export default function ChatScreen() {
 
 
 
-            <OnLineUsers></OnLineUsers>
-            <AllUser></AllUser>
+            <OnLineUsers navigation={navigation} />
+            <AllUser navigation={navigation} />
 
         </SafeAreaView>
     )

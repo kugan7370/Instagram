@@ -12,12 +12,16 @@ import { db } from '../Firebase'
 export default function HomeScreen({ navigation }) {
     const [userPosts, setuserPosts] = useState([])
 
-
-    useEffect(() => {
+    const getposts = () => {
         const q = query((collection(db, 'post')), orderBy("createAt", "desc"))
         onSnapshot(q, (snapshot) => {
             setuserPosts((snapshot.docs.map((post) => ({ id: post.id, ...post.data() }))));
         })
+    }
+    useEffect(() => {
+
+        getposts();
+
 
 
     }, [db])
@@ -30,7 +34,7 @@ export default function HomeScreen({ navigation }) {
 
             <ScrollView style={{ marginBottom: 20 }} >
                 {userPosts.map((post, index) => (
-                    <Posts key={post.index} post={post} />
+                    <Posts key={index} post={post} />
                 ))}
 
 
